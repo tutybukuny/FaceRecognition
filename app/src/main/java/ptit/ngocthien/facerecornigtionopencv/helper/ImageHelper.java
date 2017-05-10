@@ -1,0 +1,44 @@
+package ptit.ngocthien.facerecornigtionopencv.helper;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+/**
+ * Created by huutien on 4/17/2017.
+ */
+
+public class ImageHelper {
+
+    private static final String TAG = "ImageHelper";
+    public static String dirPath = Environment.getExternalStorageDirectory() + File.separator + "FaceRecognition";
+
+    public static File store(Context context, Bitmap bm) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmmssddMMyyyy");
+        String fileName = "IMG" + sdf.format(Calendar.getInstance().getTime()) + ".png";
+
+        File file = new File(dirPath + "/" + fileName);
+        try {
+            Log.d("create file: ", file.createNewFile() + "");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e) {
+            Log.e("ImageHelper :", "Khong Luu Anh");
+            e.printStackTrace();
+        }
+
+        MediaScannerConnection.scanFile(context,
+                new String[]{file.getPath()}, new String[]{"image/jpeg"}, null);
+        return file;
+    }
+}
