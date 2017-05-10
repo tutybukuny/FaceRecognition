@@ -13,6 +13,13 @@
         android:orientation="vertical">
 
         <ImageButton
+            android:id="@+id/iv_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="ChangeImage"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
             android:id="@+id/iv_smile"
             android:layout_width="match_parent"
             android:layout_height="60dp"

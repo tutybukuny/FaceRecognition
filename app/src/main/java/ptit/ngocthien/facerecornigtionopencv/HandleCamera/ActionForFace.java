@@ -27,14 +27,11 @@ public class ActionForFace {
     public static Mat smileImg = null;
 
     public static Mat writeRect(MatOfRect faces, Mat mRgba, Context context) {
-        // If there are any faces found, draw a rectangle around it
-        Rect[] facesArray = faces.toArray();
-
         for (Rect rect : faces.toArray()) {
             Core.rectangle(mRgba, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
                     new Scalar(0, 255, 0));
         }
-        Log.e("Frame", facesArray.length + "");
+//        Log.e("Frame", facesArray.length + "");
 
         return mRgba;
     }
@@ -67,6 +64,8 @@ public class ActionForFace {
                         }
                     }
                 }
+            } else {
+                writeRect(faces, mRgba, context);
             }
         }
 
@@ -76,7 +75,10 @@ public class ActionForFace {
     public static void setidImage(int id, Context context) {
         idImage = id;
         try {
-            if (idImage != 0) {
+            if (idImage == -1) {
+                smile = null;
+                smileImg = null;
+            } else if (idImage != 0) {
                 smile = GetInsertImage.prepareImage(idImage, context);
                 smileImg = new Mat(smile.rows(), smile.cols(), CvType.CV_8UC4);
                 Imgproc.cvtColor(smile, smileImg, Imgproc.COLOR_RGB2BGR);

@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void ChangeImage(View view) {
         int id = view.getId();
         switch (id) {
+            case R.id.iv_rectangle:
+                inf.setidImage(-1);
+                break;
             case R.id.iv_smile:
                 inf.setidImage(R.drawable.smile);
                 break;
