@@ -27,7 +27,6 @@ public class GetInputFrame implements CameraBridgeViewBase.CvCameraViewListener2
     @Override
     public void onCameraViewStarted(int width, int height) {
         mRgba = new Mat(height, width, CvType.CV_8UC4);
-        //Imgproc.resize(mRgba, mRgba, new Size(480, 640));
         absoluteFaceSize = (int) (height * 0.2);
     }
 
@@ -39,8 +38,6 @@ public class GetInputFrame implements CameraBridgeViewBase.CvCameraViewListener2
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         mRgba = inputFrame.rgba();
-     //   Imgproc.resize(mRgba, mRgba, new Size(480, 640));
-//        Core.flip(mRgba.t(), mRgba, 1);
         MatOfRect faces = new MatOfRect();
 
         if (cascadeClassifier != null) {
@@ -48,8 +45,6 @@ public class GetInputFrame implements CameraBridgeViewBase.CvCameraViewListener2
                     new Size(absoluteFaceSize, absoluteFaceSize), new Size());
         }
 
-
-//        mRgba = ActionForFace.writeRect(faces, mRgba, context);
         mRgba = ActionForFace.writeSmile(faces, mRgba, context);
         this.saveMat = mRgba;
         return mRgba;

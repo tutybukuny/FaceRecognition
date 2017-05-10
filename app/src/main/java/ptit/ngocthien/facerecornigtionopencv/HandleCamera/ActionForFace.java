@@ -41,12 +41,8 @@ public class ActionForFace {
 
     public static Mat writeSmile(MatOfRect faces, Mat mRgba, Context context) {
         Rect[] facesArray = faces.toArray();
-        //Mat output = new Mat(mRgba.rows(), mRgba.cols(), mRgba.type());
-        //mRgba.copyTo(output);
 
         for (Rect rect : facesArray) {
-//            Core.rectangle(output, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
-//                    new Scalar(0, 255, 0));
 
             if (smile != null) {
                 //to do good
@@ -83,12 +79,9 @@ public class ActionForFace {
             if (idImage != 0) {
                 smile = GetInsertImage.prepareImage(idImage, context);
                 smileImg = new Mat(smile.rows(), smile.cols(), CvType.CV_8UC4);
-//                System.out.println(smile.channels() + " src");
-//                System.out.println(img.channels() + " dst");
                 Imgproc.cvtColor(smile, smileImg, Imgproc.COLOR_RGB2BGR);
                 Imgproc.cvtColor(smileImg, smileImg, Imgproc.COLOR_BGR2BGRA);
             }
-            //smile.channels();
         } catch (IOException e) {
             e.printStackTrace();
         }

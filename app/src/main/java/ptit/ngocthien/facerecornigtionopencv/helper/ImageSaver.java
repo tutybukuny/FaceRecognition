@@ -16,9 +16,9 @@ import java.util.Calendar;
  * Created by huutien on 4/17/2017.
  */
 
-public class ImageHelper {
+public class ImageSaver {
 
-    private static final String TAG = "ImageHelper";
+    private static final String TAG = "ImageSaver";
     public static String dirPath = Environment.getExternalStorageDirectory() + File.separator + "FaceRecognition";
 
     public static File store(Context context, Bitmap bm) {
@@ -33,7 +33,7 @@ public class ImageHelper {
             fOut.flush();
             fOut.close();
         } catch (Exception e) {
-            Log.e("ImageHelper :", "Khong Luu Anh");
+            Log.e("ImageSaver :", "Khong Luu Anh");
             e.printStackTrace();
         }
 

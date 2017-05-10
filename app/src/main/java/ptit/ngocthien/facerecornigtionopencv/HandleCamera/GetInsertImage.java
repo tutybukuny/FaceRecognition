@@ -40,6 +40,5 @@ public class GetInsertImage {
             return smile;
         }
         return Utils.loadResource(context, id, Highgui.CV_LOAD_IMAGE_ANYCOLOR);
-        //return Highgui.imread("smile.png", CvType.CV_8UC4);
     }
 }

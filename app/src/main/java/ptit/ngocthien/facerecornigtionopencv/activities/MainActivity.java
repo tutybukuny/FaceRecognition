@@ -27,12 +27,11 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.objdetect.CascadeClassifier;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import ptit.ngocthien.facerecornigtionopencv.HandleCamera.GetInputFrame;
 import ptit.ngocthien.facerecornigtionopencv.R;
-import ptit.ngocthien.facerecornigtionopencv.helper.ImageHelper;
+import ptit.ngocthien.facerecornigtionopencv.helper.ImageSaver;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Utils.matToBitmap(mat, bitmapPhoto);
         Toast.makeText(this, "Image has been saved!", Toast.LENGTH_SHORT).show();
         iv.setImageBitmap(bitmapPhoto);
-        File file = ImageHelper.store(this, bitmapPhoto);
+        File file = ImageSaver.store(this, bitmapPhoto);
         uri = Uri.fromFile(file);
     }
 
@@ -204,14 +203,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (bitmapPhoto != null) {
                     Log.d("click : ","aaaaaaaaa");
                     Intent intent = new Intent(MainActivity.this, ViewImageActivity.class);
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    bitmapPhoto.compress(Bitmap.CompressFormat.PNG, 80, stream);
-//                    byte[] byteArray = stream.toByteArray();
 
                     intent.putExtra("imageUri",uri.toString());
                     Log.d("image URI : ",uri.toString());
-//                    intent.putExtra("image", byteArray);
-//                    Log.d("byteArray :",byteArray.length+"");
 
                     startActivity(intent);
                 }
