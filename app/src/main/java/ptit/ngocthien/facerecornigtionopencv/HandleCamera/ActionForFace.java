@@ -18,7 +18,7 @@ import java.io.IOException;
 import ptit.ngocthien.facerecornigtionopencv.R;
 
 /**
- * Created by tutyb on 4/1/2017.
+ * Created by ngocthien on 4/1/2017.
  */
 
 public class ActionForFace {
@@ -36,7 +36,7 @@ public class ActionForFace {
         return mRgba;
     }
 
-    public static Mat writeSmile(MatOfRect faces, Mat mRgba, Context context) {
+    public static Mat insertImage(MatOfRect faces, Mat mRgba, Context context) {
         Rect[] facesArray = faces.toArray();
 
         for (Rect rect : facesArray) {

@@ -10,7 +10,7 @@ import org.opencv.core.Size;
 import org.opencv.objdetect.CascadeClassifier;
 
 /**
- * Created by tutyb on 4/1/2017.
+ * Created by ngocthien on 4/1/2017.
  */
 
 public class GetInputFrame implements CameraBridgeViewBase.CvCameraViewListener2 {
@@ -45,7 +45,7 @@ public class GetInputFrame implements CameraBridgeViewBase.CvCameraViewListener2
                     new Size(absoluteFaceSize, absoluteFaceSize), new Size());
         }
 
-        mRgba = ActionForFace.writeSmile(faces, mRgba, context);
+        mRgba = ActionForFace.insertImage(faces, mRgba, context);
         this.saveMat = mRgba;
         return mRgba;
     }

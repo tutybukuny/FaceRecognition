@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by huutien on 4/17/2017.
+ * Created by ngocthien on 4/17/2017.
  */
 
 public class ImageSaver {
