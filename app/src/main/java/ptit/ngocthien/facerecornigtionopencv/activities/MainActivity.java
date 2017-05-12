@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static String TAG = MainActivity.class.getSimpleName();
     static final int REQUEST_CAMERA = 1;
+    static final int REQUEST_WRITE_EXTERNAL_STORAGE = 2;
+    static final int REQUEST_READ_EXTERNAL_STORAGE = 3;
+    static final int REQUEST_ACCESS_COARSE_LOCATION = 4;
+    static final int REQUEST_ACCESS_FINE_LOCATION = 5;
     ImageButton btnSwitchCamera;
     ImageButton btnTakePhoto;
     ImageView iv;
@@ -44,10 +48,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CascadeClassifier cascadeClassifier;
     GetInputFrame inf;
     private String[] permissions = new String[]{
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
     };
     private int[] permisstionsID = new int[]{
-            REQUEST_CAMERA
+            REQUEST_CAMERA, REQUEST_WRITE_EXTERNAL_STORAGE, REQUEST_READ_EXTERNAL_STORAGE,
+            REQUEST_ACCESS_COARSE_LOCATION, REQUEST_ACCESS_FINE_LOCATION
     };
     Bitmap bitmapPhoto;
     Uri uri;
@@ -98,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         cameraView = (JavaCameraView) findViewById(R.id.cameraView);
         cameraView.setCameraIndex(cameraIndex);
-        cameraView.setMaxFrameSize(1080, 720);
+        cameraView.setMaxFrameSize(360, 270);
         cameraView.setVisibility(SurfaceView.VISIBLE);
         inf = new GetInputFrame(this);
         cameraView.setCvCameraViewListener(inf);
@@ -204,11 +210,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.iv:
                 if (bitmapPhoto != null) {
-                    Log.d("click : ","aaaaaaaaa");
+                    Log.d("click : ", "aaaaaaaaa");
                     Intent intent = new Intent(MainActivity.this, ViewImageActivity.class);
 
-                    intent.putExtra("imageUri",uri.toString());
-                    Log.d("image URI : ",uri.toString());
+                    intent.putExtra("imageUri", uri.toString());
+                    Log.d("image URI : ", uri.toString());
 
                     startActivity(intent);
                 }

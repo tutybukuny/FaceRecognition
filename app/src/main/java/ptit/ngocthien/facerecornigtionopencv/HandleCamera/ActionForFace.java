@@ -42,25 +42,20 @@ public class ActionForFace {
         for (Rect rect : facesArray) {
 
             if (smile != null) {
-                //to do good
-
                 Mat img = smileImg.clone();
 
                 Imgproc.resize(img, img, new Size(rect.width, rect.height));
-                //to do good
                 Mat dst1 = new Mat();
                 Imgproc.resize(smile, dst1, new Size(rect.width, rect.height));
                 double alpha;
-                // start at row 0/col 0
+
                 for (int y = 0; y < dst1.rows(); ++y) {
                     for (int x = 0; x < dst1.cols(); ++x) {
                         double info[] = dst1.get(y, x);
                         alpha = info[2];
-                        // and now combine the background and foreground pixel, using the opacity,but only if opacity > 0.
-                        if (alpha > 0) //rude but this is what I need
-                        {
-                            double infof[] = img.get(y, x);
-                            mRgba.put(y + rect.y, x + rect.x, infof);
+
+                        if (alpha > 0) {
+                            mRgba.put(y + rect.y, x + rect.x, img.get(y, x));
                         }
                     }
                 }
