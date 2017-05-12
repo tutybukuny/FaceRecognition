@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton btnTakePhoto;
     ImageView iv;
     int cameraIndex = -1;
-    private CascadeClassifier cascadeClassifier;
     GetInputFrame inf;
     private String[] permissions = new String[]{
             Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,

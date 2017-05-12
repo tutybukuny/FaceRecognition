@@ -42,31 +42,34 @@ public class ViewImageActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_view_image,menu);
+        getMenuInflater().inflate(R.menu.menu_view_image, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_share:
                 shareImage(uri);
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void shareImage(Uri uri){
+    private void shareImage(Uri uri) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");
 
         intent.putExtra(Intent.EXTRA_SUBJECT, "");
-        intent.putExtra(Intent.EXTRA_TEXT,"");
-        intent.putExtra(Intent.EXTRA_STREAM,uri);
+        intent.putExtra(Intent.EXTRA_TEXT, "");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
         try {
-            startActivity(Intent.createChooser(intent,"Share Picture"));
-        }catch (ActivityNotFoundException e){
+            startActivity(Intent.createChooser(intent, "Share Picture"));
+        } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "No App Avative", Toast.LENGTH_SHORT).show();
         }
     }

@@ -25,6 +25,11 @@ public class ImageSaver {
         SimpleDateFormat sdf = new SimpleDateFormat("HHmmssddMMyyyy");
         String fileName = "IMG" + sdf.format(Calendar.getInstance().getTime()) + ".png";
 
+        File folder = new File(dirPath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
         File file = new File(dirPath + "/" + fileName);
         try {
             Log.d("create file: ", file.createNewFile() + "");
