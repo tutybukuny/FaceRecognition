@@ -4,10 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import org.opencv.android.Utils;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
 
 import java.io.IOException;
 
@@ -22,16 +20,7 @@ public class GetInsertImage {
     public static Mat smile;
 
     public static Mat prepareImage(int id, Context context) throws IOException {
-        switch (id) {
-            case R.drawable.smile:
-                return getImgage(smile, id, context);
-            case R.drawable.face2:
-                return getImgage(smile, id, context);
-            case R.drawable.smile1:
-                return getImgage(smile, id, context);
-        }
-
-        return null;
+        return getImgage(smile, id, context);
     }
 
     private static Mat getImgage(Mat smile, int id, Context context) throws IOException {

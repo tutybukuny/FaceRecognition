@@ -2,14 +2,9 @@ package ptit.ngocthien.facerecornigtionopencv.Activities;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -145,14 +140,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.iv_rectangle:
                 inf.setidImage(-1);
                 break;
-            case R.id.iv_smile:
-                inf.setidImage(R.drawable.smile);
+            case R.id.iv_nose_glass:
+                inf.setidImage(R.drawable.nose_glass);
                 break;
-            case R.id.iv_face2:
-                inf.setidImage(R.drawable.face2);
-                break;
-            case R.id.iv_face1:
-                inf.setidImage(R.drawable.smile1);
+            case R.id.iv_iron_man_mask:
+                inf.setidImage(R.drawable.iron_man_mask);
                 break;
         }
     }
