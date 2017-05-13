@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void checkCapturedPhoto() {
+        ImageSaver.createFolderIfNotExists();
+
         List<ImageObject> list = ImageSelectionActivity.getAllImages();
 
         if (list.size() > 0) {

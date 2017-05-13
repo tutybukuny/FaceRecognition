@@ -24,10 +24,7 @@ public class ImageSaver {
         SimpleDateFormat sdf = new SimpleDateFormat("HHmmssddMMyyyy");
         String fileName = "IMG" + sdf.format(Calendar.getInstance().getTime()) + ".png";
 
-        File folder = new File(dirPath);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
+        createFolderIfNotExists();
 
         File file = new File(dirPath + "/" + fileName);
         try {
@@ -44,5 +41,12 @@ public class ImageSaver {
         MediaScannerConnection.scanFile(context,
                 new String[]{file.getPath()}, new String[]{"image/jpeg"}, null);
         return file;
+    }
+
+    public static void createFolderIfNotExists() {
+        File folder = new File(dirPath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
     }
 }
