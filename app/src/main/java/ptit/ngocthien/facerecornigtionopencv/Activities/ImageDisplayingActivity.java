@@ -1,9 +1,7 @@
-package ptit.ngocthien.facerecornigtionopencv.activities;
+package ptit.ngocthien.facerecornigtionopencv.Activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +13,7 @@ import android.widget.Toast;
 
 import ptit.ngocthien.facerecornigtionopencv.R;
 
-public class ViewImageActivity extends AppCompatActivity {
+public class ImageDisplayingActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ImageView imageView;
@@ -24,7 +22,7 @@ public class ViewImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_image);
+        setContentView(R.layout.activity_image_displaying);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         imageView = (ImageView) findViewById(R.id.image_view);

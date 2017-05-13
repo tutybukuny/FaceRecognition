@@ -1,4 +1,4 @@
-package ptit.ngocthien.facerecornigtionopencv.activities;
+package ptit.ngocthien.facerecornigtionopencv.Activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -19,45 +19,39 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
+import java.util.List;
 
 import ptit.ngocthien.facerecornigtionopencv.HandleCamera.GetInputFrame;
 import ptit.ngocthien.facerecornigtionopencv.R;
-import ptit.ngocthien.facerecornigtionopencv.helper.ImageSaver;
+import ptit.ngocthien.facerecornigtionopencv.Helper.ImageSaver;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
-    static final int REQUEST_CAMERA = 1;
-    static final int REQUEST_WRITE_EXTERNAL_STORAGE = 2;
-    static final int REQUEST_READ_EXTERNAL_STORAGE = 3;
-    static final int REQUEST_ACCESS_COARSE_LOCATION = 4;
-    static final int REQUEST_ACCESS_FINE_LOCATION = 5;
+
     ImageButton btnSwitchCamera;
     ImageButton btnTakePhoto;
     ImageView iv;
     int cameraIndex = -1;
     GetInputFrame inf;
-    private String[] permissions = new String[]{
-            Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
-    };
-    private int[] permisstionsID = new int[]{
-            REQUEST_CAMERA, REQUEST_WRITE_EXTERNAL_STORAGE, REQUEST_READ_EXTERNAL_STORAGE,
-            REQUEST_ACCESS_COARSE_LOCATION, REQUEST_ACCESS_FINE_LOCATION
-    };
     Bitmap bitmapPhoto;
     Uri uri;
-
     JavaCameraView cameraView;
+
     BaseLoaderCallback callback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -99,7 +93,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        askPermissions();
+//        askPermissions();
+
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+            }
+        }).check();
 
         cameraView = (JavaCameraView) findViewById(R.id.cameraView);
         cameraView.setCameraIndex(cameraIndex);
@@ -115,16 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cameraView.setCameraIndex(cameraIndex);
         cameraView.enableView();
         Toast.makeText(getBaseContext(), "Changed Camera!", Toast.LENGTH_LONG).show();
-    }
-
-    private void askPermissions() {//ask permission from user
-        if (Build.VERSION.SDK_INT >= 23) {
-            for (int i = 0; i < permissions.length; i++) {
-                if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{permissions[i]}, permisstionsID[i]);
-                }
-            }
-        }
     }
 
     public void ChangeImage(View view) {
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void capturePicture() {//take a photo
         Mat mat = GetInputFrame.saveMat;
         bitmapPhoto = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
-        Log.e("mat size", GetInputFrame.mRgba.width() + "");
+//        Log.e("mat size", GetInputFrame.mRgba.width() + "");
         Utils.matToBitmap(mat, bitmapPhoto);
         Toast.makeText(this, "Image has been saved!", Toast.LENGTH_SHORT).show();
         iv.setImageBitmap(bitmapPhoto);
@@ -156,23 +155,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uri = Uri.fromFile(file);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //request permissions
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST_CAMERA: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Camera Permission granted!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(this, "Camera Permission denied!", Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
+    private void checkRequest(int[] grantResults, String permissionName) {
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, permissionName + " Permission granted!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, permissionName + " Permission denied!", Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
@@ -209,11 +198,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.iv:
                 if (bitmapPhoto != null) {
-                    Log.d("click : ", "aaaaaaaaa");
-                    Intent intent = new Intent(MainActivity.this, ViewImageActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ImageSelectionActivity.class);
 
-                    intent.putExtra("imageUri", uri.toString());
-                    Log.d("image URI : ", uri.toString());
+//                    intent.putExtra("imageUri", uri.toString());
+//                    Log.d("image URI : ", uri.toString());
 
                     startActivity(intent);
                 }
