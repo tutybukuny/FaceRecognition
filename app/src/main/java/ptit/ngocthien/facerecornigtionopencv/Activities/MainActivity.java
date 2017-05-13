@@ -36,6 +36,7 @@ import java.io.File;
 import java.util.List;
 
 import ptit.ngocthien.facerecornigtionopencv.HandleCamera.GetInputFrame;
+import ptit.ngocthien.facerecornigtionopencv.Model.ImageObject;
 import ptit.ngocthien.facerecornigtionopencv.R;
 import ptit.ngocthien.facerecornigtionopencv.Helper.ImageSaver;
 
@@ -90,15 +91,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSwitchCamera.setOnClickListener(this);
         btnTakePhoto.setOnClickListener(this);
 
+        checkCapturedPhoto();
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-//        askPermissions();
 
         Dexter.withActivity(this)
                 .withPermissions(
                         Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION
                 ).withListener(new MultiplePermissionsListener() {
             @Override
@@ -116,6 +118,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cameraView.setVisibility(SurfaceView.VISIBLE);
         inf = new GetInputFrame(this);
         cameraView.setCvCameraViewListener(inf);
+    }
+
+    private void checkCapturedPhoto() {
+        List<ImageObject> list = ImageSelectionActivity.getAllImages();
+
+        if (list.size() > 0) {
+            iv.setImageURI(Uri.parse(list.get(0).getPath()));
+            bitmapPhoto = Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+        }
     }
 
     private void changeCamera() {//change camera to front or back
@@ -155,15 +166,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uri = Uri.fromFile(file);
     }
 
-    private void checkRequest(int[] grantResults, String permissionName) {
-        if (grantResults.length > 0
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, permissionName + " Permission granted!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, permissionName + " Permission denied!", Toast.LENGTH_LONG).show();
-        }
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -199,10 +201,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.iv:
                 if (bitmapPhoto != null) {
                     Intent intent = new Intent(MainActivity.this, ImageSelectionActivity.class);
-
-//                    intent.putExtra("imageUri", uri.toString());
-//                    Log.d("image URI : ", uri.toString());
-
                     startActivity(intent);
                 }
                 break;

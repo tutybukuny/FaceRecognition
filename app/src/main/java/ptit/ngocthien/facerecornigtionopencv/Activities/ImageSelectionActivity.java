@@ -11,6 +11,7 @@ import android.view.View;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import ptit.ngocthien.facerecornigtionopencv.Adapter.ImageAdapter;
 import ptit.ngocthien.facerecornigtionopencv.Helper.ImageSaver;
@@ -22,7 +23,7 @@ public class ImageSelectionActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     RecyclerView rv_images;
-    ArrayList<ImageObject> list;
+    List<ImageObject> list;
     ImageAdapter adapter;
 
     @Override
@@ -39,7 +40,7 @@ public class ImageSelectionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rv_images = (RecyclerView) findViewById(R.id.rv_images);
-        getAllImages();
+        list = getAllImages();
         adapter = new ImageAdapter(list, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3, 1, false);
         rv_images.setLayoutManager(layoutManager);
@@ -66,13 +67,15 @@ public class ImageSelectionActivity extends AppCompatActivity {
                 }));
     }
 
-    public void getAllImages() {
-        list = new ArrayList<>();
+    public static List<ImageObject> getAllImages() {
+        List<ImageObject> list = new ArrayList<>();
         File files[] = new File(ImageSaver.dirPath).listFiles();
 
         for (File file : files) {
             list.add(new ImageObject(file.getAbsolutePath()));
         }
+
+        return list;
     }
 
     @Override
