@@ -36,6 +36,7 @@ public class ImageSelectionActivity extends AppCompatActivity {
 
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Choose image");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

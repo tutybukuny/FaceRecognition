@@ -25,6 +25,7 @@ public class ImageDisplayingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_displaying);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Image");
         imageView = (ImageView) findViewById(R.id.image_view);
 
         setSupportActionBar(toolbar);

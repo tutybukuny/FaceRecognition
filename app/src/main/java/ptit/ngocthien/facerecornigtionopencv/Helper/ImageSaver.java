@@ -34,7 +34,7 @@ public class ImageSaver {
             fOut.flush();
             fOut.close();
         } catch (Exception e) {
-            Log.e("ImageSaver :", "Khong Luu Anh");
+            Log.e(TAG, "Can't save image");
             e.printStackTrace();
         }
 
