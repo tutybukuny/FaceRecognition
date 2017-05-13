@@ -7,47 +7,12 @@
     android:orientation="horizontal"
     tools:context="ptit.ngocthien.facerecornigtionopencv.Activities.MainActivity">
 
-    <LinearLayout
-        android:layout_width="76dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/iv_rectangle"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:onClick="ChangeImage"
-            android:scaleType="centerCrop" />
-
-        <ImageButton
-            android:id="@+id/iv_smile"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:onClick="ChangeImage"
-            android:scaleType="centerCrop"
-            android:src="@drawable/smile" />
-
-        <ImageButton
-            android:id="@+id/iv_face1"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:onClick="ChangeImage"
-            android:scaleType="centerCrop"
-            android:src="@drawable/smile1" />
-
-        <ImageButton
-            android:id="@+id/iv_face2"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:onClick="ChangeImage"
-            android:scaleType="centerCrop"
-            android:src="@drawable/face2" />
-
-    </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9">
 
         <org.opencv.android.JavaCameraView
             android:id="@+id/cameraView"
@@ -84,5 +49,42 @@
             android:layout_alignRight="@+id/rotateCamera"
             android:layout_alignEnd="@+id/rotateCamera" />
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="76dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
 
+        <ImageButton
+            android:id="@+id/iv_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="ChangeImage"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@+id/iv_smile"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="ChangeImage"
+            android:scaleType="centerCrop"
+            android:src="@drawable/smile" />
+
+        <ImageButton
+            android:id="@+id/iv_face1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="ChangeImage"
+            android:scaleType="centerCrop"
+            android:src="@drawable/smile1" />
+
+        <ImageButton
+            android:id="@+id/iv_face2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="ChangeImage"
+            android:scaleType="centerCrop"
+            android:src="@drawable/face2" />
+
+    </LinearLayout>
 </LinearLayout>
