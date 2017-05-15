@@ -70,6 +70,7 @@ public class ImageSelectionActivity extends AppCompatActivity {
 
     public static List<ImageObject> getAllImages() {
         List<ImageObject> list = new ArrayList<>();
+        ImageSaver.createFolderIfNotExists();
         File files[] = new File(ImageSaver.dirPath).listFiles();
 
         for (File file : files) {
