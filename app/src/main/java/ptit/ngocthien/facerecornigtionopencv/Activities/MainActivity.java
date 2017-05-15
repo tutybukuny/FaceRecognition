@@ -14,11 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.JavaCameraView;
@@ -28,12 +25,13 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import ptit.ngocthien.facerecornigtionopencv.HandleCamera.GetInputFrame;
+import ptit.ngocthien.facerecornigtionopencv.Helper.ImageSaver;
 import ptit.ngocthien.facerecornigtionopencv.Model.ImageObject;
 import ptit.ngocthien.facerecornigtionopencv.R;
-import ptit.ngocthien.facerecornigtionopencv.Helper.ImageSaver;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -78,22 +76,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Dexter.withActivity(this)
-                .withPermissions(
-                        Manifest.permission.INTERNET,
-                        Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                ).withListener(new MultiplePermissionsListener() {
+        PermissionListener permissionlistener = new PermissionListener() {
             @Override
-            public void onPermissionsChecked(MultiplePermissionsReport report) {
+            public void onPermissionGranted() {
+                Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(MainActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
-        }).check();
+
+
+        };
+
+        new TedPermission(this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n" +
+                        "\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .check();
 
         iv = (ImageView) findViewById(R.id.iv);
         btnSwitchCamera = (ImageButton) findViewById(R.id.rotateCamera);
