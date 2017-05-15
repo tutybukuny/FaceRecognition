@@ -78,21 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        iv = (ImageView) findViewById(R.id.iv);
-        btnSwitchCamera = (ImageButton) findViewById(R.id.rotateCamera);
-        btnTakePhoto = (ImageButton) findViewById(R.id.takePhoto);
-
-        iv.setOnClickListener(this);
-        btnSwitchCamera.setOnClickListener(this);
-        btnTakePhoto.setOnClickListener(this);
-
-        checkCapturedPhoto();
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         Dexter.withActivity(this)
                 .withPermissions(
+                        Manifest.permission.INTERNET,
                         Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -106,6 +94,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
             }
         }).check();
+
+        iv = (ImageView) findViewById(R.id.iv);
+        btnSwitchCamera = (ImageButton) findViewById(R.id.rotateCamera);
+        btnTakePhoto = (ImageButton) findViewById(R.id.takePhoto);
+
+        iv.setOnClickListener(this);
+        btnSwitchCamera.setOnClickListener(this);
+        btnTakePhoto.setOnClickListener(this);
+
+        checkCapturedPhoto();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
         cameraView = (JavaCameraView) findViewById(R.id.cameraView);
         cameraView.setCameraIndex(cameraIndex);

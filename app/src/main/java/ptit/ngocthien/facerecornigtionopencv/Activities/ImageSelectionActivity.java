@@ -57,7 +57,7 @@ public class ImageSelectionActivity extends AppCompatActivity {
                     public void onClick(View view, int position) {
                         ImageObject imageObject = list.get(position);
                         Intent intent = new Intent(ImageSelectionActivity.this, ImageDisplayingActivity.class);
-                        intent.putExtra("imageUri", imageObject.getPath());
+                        intent.putExtra("imagePath", imageObject.getPath());
                         startActivity(intent);
                     }
 
