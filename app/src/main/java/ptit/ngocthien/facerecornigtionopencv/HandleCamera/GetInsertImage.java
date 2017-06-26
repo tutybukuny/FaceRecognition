@@ -12,7 +12,7 @@ import java.io.IOException;
 import ptit.ngocthien.facerecornigtionopencv.R;
 
 /**
- * Created by huutien on 4/10/2017.
+ * Created by ngocthien on 4/10/2017.
  */
 
 public class GetInsertImage {
